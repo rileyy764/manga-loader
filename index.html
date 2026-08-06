@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Subscriptions Loader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #764ba2;
+        }
+        .instructions {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .instructions ol {
+            margin: 10px 0;
+        }
+        .instructions li {
+            margin: 8px 0;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Manga Subscriptions Loader</h1>
+        <p>Get all your manga subscription titles copied to your clipboard instantly!</p>
+        
+        <button onclick="installBookmarklet()">Step 1: Install Bookmarklet</button>
+        
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <ol>
+                <li>Click the button above to install the bookmarklet</li>
+                <li>Click the button again to open your subscriptions page</li>
+                <li>Once the page loads, click the <strong>"Load Subscriptions"</strong> bookmark in your toolbar</li>
+                <li>Your titles will be copied to clipboard automatically!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function installBookmarklet() {
+            const bookmarkletCode = `javascript:(async function(){let clickCount=0;while(true){let viewMoreBtn=document.querySelector('button[hx-get][hx-swap]');if(viewMoreBtn&&viewMoreBtn.textContent.includes('View More')){viewMoreBtn.click();clickCount++;console.log(\`Clicked "View More" #\${clickCount}...\`);await new Promise(resolve=>setTimeout(resolve,1000))}else{console.log('All subscriptions loaded!');break}}let titles=Array.from(document.querySelectorAll('article.bg-base-300 h2')).map(el=>el.textContent.trim()).filter(title=>title.length>0);console.log(\`Found \${titles.length} manga!\`);console.log(titles.join('\\n'));navigator.clipboard.writeText(titles.join('\\n')).then(()=>{alert('✓ Copied '+titles.length+' titles to clipboard!')})})();`;
+            
+            // Try to add as bookmark (Firefox)
+            if (window.sidebar && window.sidebar.addPanel) {
+                window.sidebar.addPanel('Load Subscriptions', bookmarkletCode, '');
+                alert('✓ Bookmarklet installed! Now opening your subscriptions page...');
+                setTimeout(() => {
+                    window.open('https://weebcentral.com/users/me/subscriptions', '_blank');
+                }, 500);
+                return;
+            }
+            
+            // Fallback: Copy to clipboard and show instructions
+            const code = bookmarkletCode.replace('javascript:', '');
+            navigator.clipboard.writeText(bookmarkletCode).then(() => {
+                alert('✓ Bookmarklet code copied!\n\n' +
+                      'Now:\n' +
+                      '1. Open your browser bookmarks manager (Ctrl+Shift+B or Cmd+Shift+B)\n' +
+                      '2. Create a new bookmark\n' +
+                      '3. Paste the code in the URL field\n' +
+                      '4. Name it "Load Subscriptions"\n\n' +
+                      'Then open your subscriptions page and click the bookmark!');
+                setTimeout(() => {
+                    window.open('https://weebcentral.com/users/me/subscriptions', '_blank');
+                }, 500);
+            });
+        }
+    </script>
+</body>
+</html>
