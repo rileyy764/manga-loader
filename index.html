@@ -5,111 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manga Subscriptions Loader</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: url('https://tenor.com/view/vocaloid-kagamine-len-kagamine-rin-hot-cocoa-study-gif-8737596253953884557') center/cover fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 500px;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+        }
+
         h1 {
+            font-size: 28px;
             color: #333;
-            margin-top: 0;
         }
-        p {
-            color: #666;
-            line-height: 1.6;
-        }
-        button {
-            background-color: #667eea;
-            color: white;
-            padding: 15px 30px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #764ba2;
-        }
+
         .instructions {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+        }
+
+        .step-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #666;
+            min-width: 30px;
+        }
+
+        .step-content h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.5;
             font-size: 14px;
         }
-        .instructions ol {
-            margin: 10px 0;
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin-top: 10px;
+            color: #333;
         }
-        .instructions li {
-            margin: 8px 0;
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
-        .step-number {
-            font-weight: bold;
-            color: #667eea;
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #22c55e;
+            color: white;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #16a34a;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .download-icon {
+            font-size: 18px;
+        }
+
+        .final-step {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .final-step h2 {
+            font-size: 16px;
+            color: #166534;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .final-step p {
+            color: #166534;
+            font-size: 14px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📚 Manga Subscriptions Loader</h1>
-        <p>Get all your manga subscription titles copied to your clipboard instantly!</p>
-        
-        <button onclick="installBookmarklet()">Step 1: Install Bookmarklet</button>
-        
+        <div class="header">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F93%2F40%2Fef%2F9340efb03e58e4ead379e67b54ca7bb3.jpg&f=1&nofb=1&ipt=db631b802d45870e1b879142c4c92e161c3840315cff7a6774df7a3c9b9ba81f" alt="Profile" class="profile-pic">
+            <h1>Manga Subscriptions Loader</h1>
+        </div>
+
         <div class="instructions">
-            <p><strong>How to use:</strong></p>
-            <ol>
-                <li>Click the button above to install the bookmarklet</li>
-                <li>Click the button again to open your subscriptions page</li>
-                <li>Once the page loads, click the <strong>"Load Subscriptions"</strong> bookmark in your toolbar</li>
-                <li>Your titles will be copied to clipboard automatically!</li>
-            </ol>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h2>Install bookmarklet</h2>
+                    <p>Copy the code below and create a new bookmark in your browser with it as the URL.</p>
+                    <div class="code-block" id="bookmarklet-code">javascript:(async function(){let clickCount=0;while(true){let viewMoreBtn=document.querySelector('button[hx-get][hx-swap]');if(viewMoreBtn&&viewMoreBtn.textContent.includes('View More')){viewMoreBtn.click();clickCount++;console.log(`Clicked "View More" #${clickCount}...`);await new Promise(resolve=>setTimeout(resolve,1000))}else{console.log('All subscriptions loaded!');break}}let titles=Array.from(document.querySelectorAll('article.bg-base-300 h2')).map(el=>el.textContent.trim()).filter(title=>title.length>0);console.log(`Found ${titles.length} manga!`);console.log(titles.join('\n'));navigator.clipboard.writeText(titles.join('\n')).then(()=>{alert('✓ Copied '+titles.length+' titles to clipboard!')})})();</div>
+                    <div class="button-container">
+                        <button class="btn btn-primary" onclick="copyBookmarklet()">
+                            <span class="download-icon">⬇</span> Copy Code
+                        </button>
+                        <button class="btn btn-secondary" onclick="openBookmarkGuide()">How-to</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h2>Go to your subscriptions</h2>
+                    <p>Head to <a href="https://weebcentral.com/users/me/subscriptions" target="_blank" style="color: #0066cc;">weebcentral.com/users/me/subscriptions</a></p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h2>Click the bookmarklet</h2>
+                    <p>Click your newly created bookmark from the bookmarks bar. It will load all your subscriptions and copy the titles to your clipboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="final-step">
+            <h2>That's it</h2>
+            <p>Your manga titles are ready to paste anywhere you need them.</p>
         </div>
     </div>
 
     <script>
-        function installBookmarklet() {
-            const bookmarkletCode = `javascript:(async function(){let clickCount=0;while(true){let viewMoreBtn=document.querySelector('button[hx-get][hx-swap]');if(viewMoreBtn&&viewMoreBtn.textContent.includes('View More')){viewMoreBtn.click();clickCount++;console.log(\`Clicked "View More" #\${clickCount}...\`);await new Promise(resolve=>setTimeout(resolve,1000))}else{console.log('All subscriptions loaded!');break}}let titles=Array.from(document.querySelectorAll('article.bg-base-300 h2')).map(el=>el.textContent.trim()).filter(title=>title.length>0);console.log(\`Found \${titles.length} manga!\`);console.log(titles.join('\\n'));navigator.clipboard.writeText(titles.join('\\n')).then(()=>{alert('✓ Copied '+titles.length+' titles to clipboard!')})})();`;
-            
-            // Try to add as bookmark (Firefox)
-            if (window.sidebar && window.sidebar.addPanel) {
-                window.sidebar.addPanel('Load Subscriptions', bookmarkletCode, '');
-                alert('✓ Bookmarklet installed! Now opening your subscriptions page...');
+        function copyBookmarklet() {
+            const code = document.getElementById('bookmarklet-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target.closest('.btn-primary');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="download-icon">✓</span> Copied!';
                 setTimeout(() => {
-                    window.open('https://weebcentral.com/users/me/subscriptions', '_blank');
-                }, 500);
-                return;
-            }
-            
-            // Fallback: Copy to clipboard and show instructions
-            const code = bookmarkletCode.replace('javascript:', '');
-            navigator.clipboard.writeText(bookmarkletCode).then(() => {
-                alert('✓ Bookmarklet code copied!\n\n' +
-                      'Now:\n' +
-                      '1. Open your browser bookmarks manager (Ctrl+Shift+B or Cmd+Shift+B)\n' +
-                      '2. Create a new bookmark\n' +
-                      '3. Paste the code in the URL field\n' +
-                      '4. Name it "Load Subscriptions"\n\n' +
-                      'Then open your subscriptions page and click the bookmark!');
-                setTimeout(() => {
-                    window.open('https://weebcentral.com/users/me/subscriptions', '_blank');
-                }, 500);
+                    btn.innerHTML = originalText;
+                }, 2000);
             });
+        }
+
+        function openBookmarkGuide() {
+            alert('Chrome/Edge: Right-click bookmarks bar → "Add page" → Paste code as URL\n\nFirefox: Ctrl+D → Name it → Edit → Paste code as URL');
         }
     </script>
 </body>
