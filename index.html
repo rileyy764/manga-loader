@@ -55,18 +55,6 @@
         .step a:hover {
             text-decoration: underline;
         }
-        .code-block {
-            background: #1a1a1a;
-            border: 1px solid #3a3a3a;
-            border-radius: 4px;
-            padding: 12px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            overflow-x: auto;
-            margin-bottom: 12px;
-            color: #b0b0b0;
-            word-break: break-all;
-        }
         .button-group {
             display: flex;
             gap: 8px;
@@ -106,22 +94,21 @@
         </div>
 
         <div class="step">
-            <div class="step-number">1. Install bookmarklet</div>
-            <p>Copy the code below, and then create a new bookmark in your browser with it as the URL.</p>
-            <div class="code-block">javascript:(async function(){let clickCount=0;while(true){let viewMoreBtn=document.querySelector('button[hx-get][hx-swap]');if(viewMoreBtn&&viewMoreBtn.textContent.includes('View More')){viewMoreBtn.click();clickCount++;console.log(`Clicked "View More" #${clickCount}...`);await new Promise(resolve=>setTimeout(resolve,1000))}else{console.log('All subscriptions loaded!');break}}let titles=Array.from(document.querySelectorAll('article.bg-base-300 h2')).map(el=>el.textContent.trim()).filter(title=>title.length>0);console.log(`Found ${titles.length} manga!`);console.log(titles.join('\n'));navigator.clipboard.writeText(titles.join('\n')).then(()=>{alert('✓ Copied '+titles.length+' titles to clipboard!')})})();</div>
+            <div class="step-number">1. Copy Code</div>
+            <p>Click the button below to copy the code and go to your subscriptions page (it'll open it for you).</p>
             <div class="button-group">
-                <button class="copy-btn" onclick="copyCode()">⬇ Copy Code</button>
+                <button class="copy-btn" onclick="copyAndGo()">⬇ Copy & Go to Subs</button>
             </div>
         </div>
 
         <div class="step">
-            <div class="step-number">2. Go to your subs nigga</div>
-            <p>Go to <a href="https://weebcentral.com/users/me/subscriptions" target="_blank">weebcentral.com/users/me/subscriptions</a></p>
+            <div class="step-number">2. Install Bookmarklet</div>
+            <p>Paste the code you just copied as the URL in a new browser bookmark.</p>
         </div>
 
         <div class="step">
-            <div class="step-number">3. Click the bookmarklet</div>
-            <p>Click your bookmarklet from the bookmarks bar. It'll load all your subscriptions (Bcz WC's UX sucks) and copy the titles to your clipboard.</p>
+            <div class="step-number">3. Click the bookmarklet nigga</div>
+            <p>Click your bookmarklet from the bookmarks bar. It'll load all your subscriptions and copy the titles to your clipboard.</p>
         </div>
 
         <div class="gif-container">
@@ -130,10 +117,14 @@
     </div>
 
     <script>
-        function copyCode() {
+        function copyAndGo() {
             const code = "javascript:(async function(){let clickCount=0;while(true){let viewMoreBtn=document.querySelector('button[hx-get][hx-swap]');if(viewMoreBtn&&viewMoreBtn.textContent.includes('View More')){viewMoreBtn.click();clickCount++;console.log(`Clicked \"View More\" #${clickCount}...`);await new Promise(resolve=>setTimeout(resolve,1000))}else{console.log('All subscriptions loaded!');break}}let titles=Array.from(document.querySelectorAll('article.bg-base-300 h2')).map(el=>el.textContent.trim()).filter(title=>title.length>0);console.log(`Found ${titles.length} manga!`);console.log(titles.join('\\n'));navigator.clipboard.writeText(titles.join('\\n')).then(()=>{alert('✓ Copied '+titles.length+' titles to clipboard!')})})();";
+            
             navigator.clipboard.writeText(code).then(() => {
-                alert('Code copied to clipboard!');
+                // Copy successful, now open the subscriptions page
+                window.open('https://weebcentral.com/users/me/subscriptions', '_blank');
+            }).catch(() => {
+                alert('Failed to copy code');
             });
         }
     </script>
